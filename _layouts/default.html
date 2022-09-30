@@ -15,12 +15,15 @@
     <header>
       <div class="container">
         <a id="a-title" href="{{ '/' | relative_url }}">
-          <h1>{{ site.title | default: site.github.repository_name }}</h1>
+          <h1>{{ site.title}}</h1>
         </a>
-        <h2>{{ site.description | default: site.github.project_tagline }}</h2>
+        <h2></h2>
 
         <section id="downloads">
-          <a href="{{ site.github.repository_url }}" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+          <a href="{% link index.md %}" class="btn btn-publications"><span class="icon"></span>Publications</a>
+          <a href="{% link pages/about.md %}" class="btn btn-about-me"><span class="icon"></span>About me</a>
+          <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/zani0x03" class="btn btn-twitter"><span class="icon"></span>Twitter</a>
+          <a target="_blank" rel="noopener noreferrer" href="https://github.com/zani0x03" class="btn btn-github"><span class="icon"></span>GitHub</a>
         </section>
       </div>
     </header>
@@ -30,11 +33,5 @@
         {{ content }}
       </section>
     </div>
-
-    <footer>
-        <div class="container">
-            abobrinha
-          </div>          
-    </footer>
   </body>
 </html>
