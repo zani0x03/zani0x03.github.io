@@ -14,4 +14,5 @@ Aqui nesse humilde blog pretendo contar um pouco das minhas experiências profis
 Bom no decorrer da minha carreira como desenvolvedor tive alguns problemas com carteiradas do pessoal de segurança, hehehehe, e agora eu meio que me tornei um deles, hehehe, e porque digo "meio", porque ainda sou um dev, penso como dev, e estar na área de segurança meu objetivo é ajudar os devs e o principal tentar mostrar que os times de segurança e desenvolvimento podem sim trabalhar juntos, só é preciso um pouco de colaboração de ambas as partes (sim mais do time de segurança, hehehe).   
 Acho que é isso! Espero postar algo novo em breve!   
 
+
 [Voltar](../../../../../index.html)
