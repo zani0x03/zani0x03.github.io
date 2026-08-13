@@ -1,0 +1,28 @@
+# O contexto de build precisa ser pequeno e previsível — no Kaniko ele é empacotado e
+# enviado ao pod que constrói a imagem.
+#
+# `.git` fora daqui é obrigatório, não otimização: o Gemfile deste repositório já usou
+# `gemspec`, que montava a lista de arquivos com `git ls-files` e quebrava sem o
+# diretório. Se alguém reintroduzir essa forma, o build falha aqui em vez de gerar uma
+# imagem silenciosamente incompleta.
+.git
+.gitignore
+
+# Resultado de build local — o estágio de compilação gera o seu próprio.
+_site
+.jekyll-cache
+.jekyll-metadata
+.sass-cache
+
+# Gems instaladas localmente. Vão dentro da imagem via `bundle install`, na plataforma
+# certa — as daqui são binários de macOS.
+vendor
+.bundle
+
+# Documentos internos, já fora do site pelo `exclude` do _config.yml.
+CHECKLIST.md
+PROMOTION_TEMPLATES.md
+README.md
+_drafts
+
+.DS_Store

@@ -1,0 +1,82 @@
+# Build e publicação da imagem do blog no Nexus interno.
+#
+# Roda nos runners self-hosted do cluster (ARC). Kaniko, e não Docker/BuildKit: BuildKit
+# rootless ainda exige `privileged: true` dentro do Kubernetes por causa do seccomp/AppArmor
+# do próprio container, o que contraria a postura de "nenhum container privilegiado" deste
+# cluster.
+#
+# A credencial do Nexus NÃO vem de secret do GitHub: ela vive no cluster (Vault → ESO →
+# Secret `nexus-registry-push`) e chega como variável de ambiente no pod do runner. Só o
+# runner a enxerga — o pod irmão do Kaniko não herda —, por isso o config.json é escrito
+# aqui e lido de lá pelo diretório de trabalho compartilhado.
+#
+# Não existe job de teste separado: o `jekyll build` acontece dentro do Dockerfile, então
+# um site que não compila reprova o build da imagem. O que existe é o gate de terceiros
+# abaixo, que o build sozinho não pegaria.
+
+name: build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  # Gate da capability `zero-third-party`: o blog não pode fazer requisição para origem
+  # que não seja a própria. É uma propriedade fácil de perder sem perceber — basta um
+  # artigo com vídeo do YouTube embutido ou uma imagem hospedada fora — e perdê-la custa
+  # o `script-src 'none'` da CSP, que é o argumento mais forte que este blog tem.
+  #
+  # O CHECKLIST.md pede a mesma verificação antes de publicar. Aqui ela é obrigatória:
+  # checklist depende de alguém lembrar.
+  terceiros:
+    runs-on: zani0x03-blog-runners
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Nenhum recurso de terceiro no conteúdo
+        run: |
+          # Só CARREGAMENTO de recurso conta. Link de texto para fora
+          # ([fulano](https://...)) é normal e não entra aqui.
+          # ERE (grep -E): o quantificador é `?`, não `\?`. Escrito com barra, vira
+          # interrogação literal e o padrão nunca casa — a primeira versão deste gate
+          # passava em tudo, inclusive num post de teste com <img src="https://...">.
+          PADRAO='<img[^>]*src="https?://|<iframe|<script|<link[^>]*href="https?://|!\[[^]]*\]\(https?://'
+
+          if grep -rInE "$PADRAO" _posts pages _layouts _includes index.md index-en.md 2>/dev/null \
+             | grep -v 'zani0x03' ; then
+            echo ""
+            echo "::error::Recurso de terceiro encontrado. O blog precisa servir tudo da própria origem."
+            echo "Imagem de artigo vai para assets/images/. Ver CHECKLIST.md."
+            exit 1
+          fi
+          echo "OK: nenhum recurso de terceiro."
+
+  build:
+    needs: terceiros
+    runs-on: zani0x03-blog-runners
+    steps:
+      - uses: actions/checkout@v4
+
+      # Roda no próprio runner (sem `container:`) — é o único lugar onde as variáveis do
+      # Nexus existem. `printf`, não heredoc: heredoc indentado dentro de um `run: |` já
+      # gerou JSON inválido (`invalid character '\n' in string literal`) neste cluster.
+      - name: Preparar credencial do registry
+        run: |
+          AUTH=$(printf '%s:%s' "$NEXUS_REGISTRY_USERNAME" "$NEXUS_REGISTRY_PASSWORD" | base64 -w0)
+          mkdir -p .docker
+          printf '{"auths":{"nexus.infra.svc.cluster.local:5003":{"auth":"%s"}}}' "$AUTH" > .docker/config.json
+
+      # Tag = SHA do commit, que é o que o Argo CD Image Updater observa (estratégia
+      # `newest-build`) para escrever a tag nova no zp3-gitops.
+      - name: Build e push via Kaniko
+        uses: docker://registry.gitlab.com/gitlab-ci-utils/container-images/kaniko:debug
+        env:
+          DOCKER_CONFIG: /github/workspace/.docker
+        with:
+          args: >-
+            --dockerfile=Dockerfile
+            --context=dir:///github/workspace
+            --destination=nexus.infra.svc.cluster.local:5003/aplicacoes/zani0x03-blog/blog:${{ github.sha }}
+            --insecure
+            --skip-tls-verify

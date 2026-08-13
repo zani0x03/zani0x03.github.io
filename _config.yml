@@ -2,6 +2,15 @@ title: Zani0x03
 description: Blog de Tiago Zaniquelli AppSec Specialist Research Developer DotnetCore Python Ruby technology Information Security
 theme: jekyll-theme-hacker
 
+# Endereço canônico do site. Sem esta chave o jekyll-seo-tag emitia `"url":"/"` no dado
+# estruturado e um canonical incompleto.
+#
+# Importa mais depois da migração para o cluster: o site passa a ser servido em dois
+# lugares — o apex, pelo cluster, e pages.zani0x03.dev.br, pelo GitHub Pages como espelho
+# quente. Com `url` fixo no apex, as DUAS cópias emitem canonical apontando para cá, então
+# o Google indexa uma só e o conteúdo duplicado se resolve sozinho.
+url: https://zani0x03.dev.br
+
 # Idioma padrão do site. Cada página declara o próprio `lang` no front matter; este
 # valor é só o fallback usado pelo `<html lang>` quando a página não declara.
 lang: pt-BR
@@ -22,6 +31,11 @@ exclude:
   - jekyll-theme-hacker.gemspec
   - script/
   - README.md
+  # empacotamento — sem isto, o Dockerfile e a config do nginx seriam servidos
+  # publicamente em zani0x03.dev.br/Dockerfile
+  - Dockerfile
+  - nginx.conf
+  - .dockerignore
   # documentos editoriais internos — não são segredo, mas não são conteúdo do site
   - CHECKLIST.md
   - PROMOTION_TEMPLATES.md
