@@ -1,3 +1,37 @@
+// JetBrains Mono servida da própria origem, no lugar do Google Fonts.
+//
+// Motivo não é performance, é coerência: um blog sobre cultura de segurança entregava
+// o IP e o User-Agent de todo leitor ao Google a cada visita. Também é o que permite
+// a diretiva font-src 'self' na CSP, sem autorizar terceiro nenhum.
+//
+// Dois pesos estáticos em vez do eixo variável 100–800 que o link do Google pedia: o
+// site usa normal e negrito, e a variável passaria de 200 KB. Itálico fica por conta
+// da síntese do navegador — o uso é pontual, em tag e citação.
+//
+// Os arquivos passaram por subset (latin + latin-ext, 397 glifos), porque o Google
+// servia subsets automáticos via unicode-range e hospedar o conjunto completo seria
+// uma REGRESSÃO de bytes: 182 KB contra os 78 KB atuais.
+//
+// Licença OFL-1.1, que permite a redistribuição explicitamente. O OFL.txt acompanha
+// os arquivos em assets/fonts/ — é requisito da licença, não zelo.
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    // swap: exibe a fonte de fallback enquanto a nossa carrega, em vez de deixar o
+    // texto invisível. O intervalo é curto com a fonte local, mas nunca há tela vazia.
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 // Hacker Theme Overrides
 :root {
     --bg-color: #0a0a0a;

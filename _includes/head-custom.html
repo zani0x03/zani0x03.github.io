@@ -1,15 +1,27 @@
 <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
 
-<!-- Google Fonts: JetBrains Mono -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+<!--
+  Este arquivo carregava três recursos do Google Fonts e o script do Google Analytics.
+  Todos foram removidos: um blog sobre cultura de segurança de aplicações entregava o
+  IP e o User-Agent de todo leitor ao Google em cada visita, e gravava um cookie de
+  rastreamento com escopo .zani0x03.dev.br — que era enviado também para auth.,
+  lab. e cliente-oculto.
+
+  A fonte passou a ser servida da própria origem, via @font-face em _sass/hacker.scss.
+
+  Não entrou substituto de analytics, nem os "sem cookie": o Cloudflare Web Analytics,
+  apesar do nome, injeta um beacon de static.cloudflareinsights.com. As métricas de
+  borda da Cloudflare (requisições, caminhos, países) já existem no painel, sem código
+  na página.
+
+  Consequência: o site não faz nenhuma requisição externa e não executa JavaScript
+  nenhum. É isso que permite a CSP com script-src 'none' — ver a mudança
+  blog-no-cluster. Antes de reintroduzir qualquer terceiro aqui, saiba que o custo é
+  essa diretiva.
+-->
 
 <!-- Setup theme-color -->
 {% include head-custom-theme-colors.html %}
-
-<!-- Setup Google Analytics -->
-{% include head-custom-google-analytics.html %}
 
 <!-- You can set your favicon here -->
 <!-- link rel="shortcut icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}" -->
