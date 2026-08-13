@@ -17,9 +17,14 @@ My work focuses on building and evolving security programs (using frameworks lik
 
 ## Experience and Community
 
-Currently, I work as an AppSec Specialist, tackling challenges ranging from AI architecture security to establishing secure development standards at scale.
+Currently, I work in Information Security Architecture, tackling challenges ranging from AI architecture security to establishing secure development standards at scale.
 
 I am an active member of the security community, frequently speaking at conferences such as **BSides SP**, **Mind The Sec**, **Roadsec**, and **TDC**. I believe that sharing knowledge is the best way to raise the security bar for everyone.
+
+## Where to find me
+
+- [GitHub](https://github.com/zani0x03)
+- [Twitter](https://twitter.com/zani0x03)
 
 ---
 

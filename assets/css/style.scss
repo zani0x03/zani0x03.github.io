@@ -7,7 +7,8 @@
 // menu responsivo e seletor de idioma nunca chegavam ao CSS publicado.
 @import 'hacker';
 
+// Twitter e GitHub saíram do menu e foram para a página "Sobre mim" — as regras de
+// ícone deles saíram junto, para não ficar CSS apontando para botão que não existe.
 .btn-publications .icon { opacity: 0.6; background: url("../images/publications.png") 0 0 no-repeat; }
 .btn-about-me .icon { opacity: 0.6; background: url("../images/about-me.png") 0 0 no-repeat; }
-.btn-twitter .icon { opacity: 0.6; background: url("../images/twitter.png") 0 0 no-repeat; }
 .btn-talk .icon { opacity: 0.6; background: url("../images/talk.png") 0 0 no-repeat; }

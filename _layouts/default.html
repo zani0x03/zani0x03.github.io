@@ -20,20 +20,33 @@
           </a>
 
           {%- comment -%}
-            Os destinos internos usam a tag `link` do Jekyll de propósito. Ela resolve
-            o caminho em tempo de build e FALHA O BUILD se o alvo não existir — ao
-            contrário de um caminho escrito à mão, que vira 404 silencioso.
+            Menu montado a partir de _data/nav.yml, e não escrito à mão.
 
-            A versão deste redesign na cópia de trabalho havia trocado por
-            '/pages/talks.md' | relative_url, o que quebraria Talks e About me: o
-            Jekyll gera .html, não .md. Mantida a forma que já estava publicada.
+            Cada item é resolvido pelo `ref`: o rótulo sai no idioma da página e o link
+            aponta para a versão daquele idioma, caindo para o português quando a
+            tradução ainda não existe. Antes o menu era fixo em inglês e apontava sempre
+            para as páginas em português.
+
+            Os `href` vêm de `target.url`, ou seja, da própria página encontrada — não de
+            caminho escrito à mão. É por isso que não usamos mais a tag `link` aqui: o
+            endereço passa a ser sempre o de uma página que existe de fato. A versão
+            deste redesign na cópia de trabalho tinha ido pelo caminho oposto,
+            '/pages/talks.md' | relative_url, que dá 404 porque o Jekyll gera .html.
           {%- endcomment -%}
+          {%- assign all_docs = site.pages | concat: site.posts -%}
+          {%- assign cur_lang = page.lang | default: 'pt' -%}
           <nav id="downloads">
-            <a href="{% link index.md %}" class="btn btn-publications"><span class="icon"></span>Publications</a>
-            <a href="{% link pages/talks.md %}" class="btn btn-talk"><span class="icon"></span>Talks</a>
-            <a href="{% link pages/about.md %}" class="btn btn-about-me"><span class="icon"></span>About me</a>
-            <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/zani0x03" class="btn btn-twitter"><span class="icon"></span>Twitter</a>
-            <a target="_blank" rel="noopener noreferrer" href="https://github.com/zani0x03" class="btn btn-github"><span class="icon"></span>GitHub</a>
+            {%- for item in site.data.nav -%}
+              {%- assign candidates = all_docs | where: "ref", item.ref -%}
+              {%- assign target = candidates | where: "lang", cur_lang | first -%}
+              {%- unless target -%}
+                {%- assign target = candidates | where: "lang", "pt" | first -%}
+              {%- endunless -%}
+              {%- if target -%}
+                {%- assign label = item.label[cur_lang] | default: item.label.pt %}
+            <a href="{{ target.url | relative_url }}" class="btn {{ item.class }}"><span class="icon"></span>{{ label }}</a>
+              {%- endif -%}
+            {%- endfor %}
           </nav>
         </div>
 

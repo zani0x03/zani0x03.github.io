@@ -1,0 +1,30 @@
+# Menu do header.
+#
+# Cada item é identificado pelo `ref` — o mesmo identificador que pareia as traduções
+# (ver _includes/language-switcher.html). O layout usa isso para duas coisas de uma vez:
+# escolher o RÓTULO no idioma da página, e apontar o link para a versão daquele idioma.
+#
+# Antes o menu era escrito à mão em inglês e apontava sempre para as páginas em
+# português. Um leitor navegando em inglês via "About me" e caía numa página em
+# português.
+#
+# Quando não existe versão no idioma da página, o link cai para o português — que é o
+# idioma base do site. É o caso de Talks hoje, que só existe em PT.
+
+- ref: home
+  class: btn-publications
+  label:
+    pt: Publicações
+    en: Publications
+
+- ref: talks
+  class: btn-talk
+  label:
+    pt: Palestras
+    en: Talks
+
+- ref: about
+  class: btn-about-me
+  label:
+    pt: Sobre mim
+    en: About me
