@@ -1,7 +1,11 @@
 ---
 ---
 
-@import 'jekyll-theme-hacker';
+// Importa o tema PRÓPRIO (_sass/hacker.scss), que por sua vez importa o tema base
+// e aplica os overrides por cima. Importar 'jekyll-theme-hacker' direto aqui, como
+// estava, deixava todo o _sass/hacker.scss como código morto — variáveis, fonte,
+// menu responsivo e seletor de idioma nunca chegavam ao CSS publicado.
+@import 'hacker';
 
 .btn-publications .icon { opacity: 0.6; background: url("../images/publications.png") 0 0 no-repeat; }
 .btn-about-me .icon { opacity: 0.6; background: url("../images/about-me.png") 0 0 no-repeat; }

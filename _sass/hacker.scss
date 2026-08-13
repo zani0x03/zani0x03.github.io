@@ -1,4 +1,147 @@
-// Placeholder file. If your site uses
-//     @import "{{ site.theme }}";
-// Then using this theme with jekyll-remote-theme will work fine.
+// Hacker Theme Overrides
+:root {
+    --bg-color: #0a0a0a;
+    --primary-color: #00ff00;
+    --primary-dim: #00cc00;
+    --secondary-color: #008800;
+    // Corpo de texto NÃO é verde. Verde saturado sobre preto em texto corrido é
+    // ilegível em artigo longo — e artigo longo é o propósito do site. O verde fica
+    // como acento: títulos, links, código, bordas. Este cinza é levemente enviesado
+    // ao verde, para manter a temperatura da paleta sem custar a leitura.
+    --text-color: #c9d6c9;
+    --accent-color: #00ff00;
+    --shadow-color: rgba(0, 255, 0, 0.2);
+    --font-family: 'JetBrains Mono', Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+}
+
+$hacker-bg: var(--bg-color);
+$hacker-green: var(--primary-color);
+
+$body-background: $hacker-bg;
+$body-foreground: var(--text-color);
+$header: var(--primary-color);
+$conifer: var(--primary-color);
+$apple-blossom: #ff0000;
+$chelsea-cucumber: var(--primary-color);
+$cod-grey: var(--bg-color);
+$gallery: var(--text-color);
+$silver-chalice: #888;
+$dove-grey: #444;
+
+// Links
+$link-color: var(--primary-dim);
+$link-shadow: var(--shadow-color);
+
 @import "jekyll-theme-hacker";
+
+// Additional overrides after import if needed
+body {
+    background-image: none !important;
+    font-family: var(--font-family) !important;
+}
+
+// Sem text-shadow aqui de propósito: no corpo do texto o glow borra o glifo e
+// atrapalha a leitura. Ele fica só em h1, h2 e no logo do header, onde é identidade.
+a {
+    color: var(--primary-dim) !important;
+}
+
+header h1 {
+    font-family: var(--font-family) !important;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
+                 0 0 5px var(--shadow-color),
+                 0 0 10px var(--shadow-color) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family) !important;
+}
+
+// Glow só nos dois primeiros níveis. Em h3 e abaixo o corpo da letra é pequeno
+// demais e o brilho vira borrão em vez de identidade.
+h1, h2 {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
+                 0 0 5px var(--shadow-color),
+                 0 0 10px var(--shadow-color) !important;
+}
+
+hr {
+    border-bottom: 1px dashed var(--primary-color) !important;
+}
+
+th {
+    border-bottom: 1px dashed var(--primary-color) !important;
+}
+
+code.highlighter-rouge {
+    color: var(--primary-color) !important;
+}
+
+// Mobile Nav improvements
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header-meta {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.lang-link {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--primary-dim);
+}
+
+// Idioma ainda sem tradução: presente, visivelmente indisponível, não clicável.
+// Ver _includes/language-switcher.html para o porquê de ele aparecer em vez de sumir.
+.lang-link--pending {
+    color: var(--dove-grey, #555);
+    font-weight: normal;
+    cursor: default;
+}
+
+.lang-sep {
+    color: #444;
+}
+
+.lang-link.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+@include media-max-width($container-max-width) {
+    .header-main {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #downloads {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    header h1 {
+        margin-left: 0 !important;
+    }
+}
+
+footer {
+    padding: 20px 0;
+    border-top: 1px dashed var(--primary-color);
+    margin-top: 40px;
+    font-size: 14px;
+    color: #666;
+}
