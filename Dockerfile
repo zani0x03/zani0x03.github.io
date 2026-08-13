@@ -13,7 +13,22 @@
 # Debian (slim), não Alpine: o jekyll-sass-converter 3.x usa sass-embedded, que embute um
 # binário do Dart compilado contra glibc. Em Alpine (musl) ele falha em tempo de execução,
 # e o erro é obscuro. O peso extra fica só neste estágio, que é descartado.
-FROM ruby:3.3-slim-bookworm AS build
+#
+# RUBY 3.2, E NÃO 3.3 — a versão está amarrada ao Gemfile.lock, não a uma preferência.
+#
+# O lock é gerado no macOS do autor, onde só existe o Ruby 2.6 do sistema. Resolvendo sob
+# 2.6, o bundler escolhe versões de gem compatíveis com ele, e `google-protobuf 3.23.4`
+# (dependência transitiva do sass-embedded) declara `required_ruby_version < 3.3.dev`. Com a
+# imagem 3.3 o build falha assim, no `bundle install`:
+#
+#   google-protobuf-3.23.4-x86_64-linux requires ruby version < 3.3.dev, >= 2.6,
+#   which is incompatible with the current version, 3.3.12
+#
+# Isso não expõe Ruby em produção: este estágio é descartado, e a imagem final é só nginx
+# com os estáticos. Mas é dívida — o lock apodrece preso a um Ruby EOL. A correção de raiz é
+# ter um Ruby moderno na máquina do autor (rbenv/asdf), regerar o lock e subir esta linha
+# junto. Enquanto isso, 3.2 e o lock andam juntos.
+FROM ruby:3.2-slim-bookworm AS build
 
 WORKDIR /site
 
