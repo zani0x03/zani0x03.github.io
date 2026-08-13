@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: "en-US" }}">
+<html lang="{{ page.lang | default: site.lang | default: "pt-BR" }}">
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,18 +14,32 @@
 
     <header>
       <div class="container">
-        <a id="a-title" href="{{ '/' | relative_url }}">
-          <h1>{{ site.title}}</h1>
-        </a>
-        <h2></h2>
+        <div class="header-main">
+          <a id="a-title" href="{{ '/' | relative_url }}">
+            <h1>{{ site.title }}</h1>
+          </a>
 
-        <section id="downloads">
-          <a href="{% link index.md %}" class="btn btn-publications"><span class="icon"></span>Publications</a>
-          <a href="{% link pages/talks.md %}" class="btn btn-talk"><span class="icon"></span>Talks</a>          
-          <a href="{% link pages/about.md %}" class="btn btn-about-me"><span class="icon"></span>About me</a>
-          <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/zani0x03" class="btn btn-twitter"><span class="icon"></span>Twitter</a>
-          <a target="_blank" rel="noopener noreferrer" href="https://github.com/zani0x03" class="btn btn-github"><span class="icon"></span>GitHub</a>
-        </section>
+          {%- comment -%}
+            Os destinos internos usam a tag `link` do Jekyll de propósito. Ela resolve
+            o caminho em tempo de build e FALHA O BUILD se o alvo não existir — ao
+            contrário de um caminho escrito à mão, que vira 404 silencioso.
+
+            A versão deste redesign na cópia de trabalho havia trocado por
+            '/pages/talks.md' | relative_url, o que quebraria Talks e About me: o
+            Jekyll gera .html, não .md. Mantida a forma que já estava publicada.
+          {%- endcomment -%}
+          <nav id="downloads">
+            <a href="{% link index.md %}" class="btn btn-publications"><span class="icon"></span>Publications</a>
+            <a href="{% link pages/talks.md %}" class="btn btn-talk"><span class="icon"></span>Talks</a>
+            <a href="{% link pages/about.md %}" class="btn btn-about-me"><span class="icon"></span>About me</a>
+            <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/zani0x03" class="btn btn-twitter"><span class="icon"></span>Twitter</a>
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/zani0x03" class="btn btn-github"><span class="icon"></span>GitHub</a>
+          </nav>
+        </div>
+
+        <div class="header-meta">
+          {% include language-switcher.html %}
+        </div>
       </div>
     </header>
 
@@ -34,5 +48,11 @@
         {{ content }}
       </section>
     </div>
+
+    <footer>
+      <div class="container">
+        <p>&copy; {{ site.time | date: '%Y' }} Tiago Zaniquelli</p>
+      </div>
+    </footer>
   </body>
 </html>
