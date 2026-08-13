@@ -3,6 +3,7 @@ layout: default
 title: About Me
 lang: en
 ref: about
+permalink: /en/about/
 ---
 
 # About Me

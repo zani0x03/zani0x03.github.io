@@ -108,6 +108,19 @@ code.highlighter-rouge {
     color: #444;
 }
 
+// Larguras da tabela de palestras. Estas regras viviam num bloco <style> dentro de
+// pages/talks.md, e vieram para cá por dois motivos: duplicá-las na versão em inglês
+// seria pior, e um único bloco inline no site obrigaria a CSP a autorizar estilo
+// inline em TODAS as páginas — ver a mudança remover-terceiros.
+//
+// Escopadas por classe de propósito: soltas, valeriam para toda tabela do site.
+.talks-table {
+    th:first-of-type  { width: 15%; }
+    th:nth-of-type(2) { width: 15%; }
+    th:nth-of-type(3) { width: 60%; }
+    th:nth-of-type(4) { width: 10%; }
+}
+
 .lang-link.active {
     color: var(--primary-color);
     border-bottom: 2px solid var(--primary-color);
