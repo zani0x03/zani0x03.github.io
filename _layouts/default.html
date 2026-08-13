@@ -4,7 +4,22 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    {%- comment -%}
+      O cache-buster vem de `site.time` (instante do build), e não de
+      `site.github.build_revision` como era antes.
+
+      `build_revision` é fornecido pelo plugin jekyll-github-metadata, que só existe no
+      build do GitHub Pages. No container do cluster ele resolve para vazio, e o href saía
+      como `style.css?v=` — sem busting nenhum. Com `expires 7d` para CSS no nginx, uma
+      mudança de tema levaria até uma semana para chegar a quem já visitou.
+
+      `site.time` muda a cada build e funciona nos dois ambientes.
+
+      As duas expressões ficam separadas de propósito: encadear
+      `| append: site.time | date: '%s'` faz o filtro `date` receber a string inteira em vez
+      do Time, e o href sai como `/1786632867` — sem CSS nenhum na página.
+    {%- endcomment -%}
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
     {% include head-custom.html %}
 
 {% seo %}
