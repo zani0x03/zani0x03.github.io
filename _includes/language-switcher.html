@@ -1,0 +1,29 @@
+<!-- Seletor de idioma.
+
+     Percorre a lista fixa de idiomas do site, em vez de percorrer as traduções que
+     existem. A diferença importa: a versão em inglês é escrita depois da portuguesa,
+     então sempre há um intervalo em que o par está incompleto. Percorrendo só o que
+     existe, nesse intervalo o seletor sumiria da página sem explicação — o leitor não
+     saberia que há uma versão prevista.
+
+     Idioma sem tradução vira rótulo inerte, não link. -->
+<div class="lang-switcher">
+  {% if page.ref %}
+    {% assign all_docs = site.pages | concat: site.posts %}
+    {% assign translations = all_docs | where: "ref", page.ref %}
+    {% assign langs = "pt,en" | split: "," %}
+    {% for l in langs %}
+      {% assign match = translations | where: "lang", l | first %}
+      {% if match %}
+        <a href="{{ match.url | relative_url }}"
+           class="lang-link{% if l == page.lang %} active{% endif %}"
+           {% if l == page.lang %}aria-current="page"{% endif %}
+           hreflang="{{ l }}">{{ l | upcase }}</a>
+      {% else %}
+        <span class="lang-link lang-link--pending"
+              title="Versão em {{ l | upcase }} em breve">{{ l | upcase }}</span>
+      {% endif %}
+      {% unless forloop.last %} <span class="lang-sep">|</span> {% endunless %}
+    {% endfor %}
+  {% endif %}
+</div>

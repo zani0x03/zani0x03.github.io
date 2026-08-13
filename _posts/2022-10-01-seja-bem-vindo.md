@@ -5,6 +5,8 @@ date:   2022-10-01 03:00:01 -0300
 categories: blog
 tags: appsec tiagozaniquelli segurançadainformação desenvolvimento agilidade
 author: Tiago Zaniquelli
+lang: pt
+ref: seja-bem-vindo
 ---
 
 ## Seja Bem Vindo!

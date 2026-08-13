@@ -3,6 +3,10 @@ description: Blog de Tiago Zaniquelli AppSec Specialist Research Developer Dotne
 google_analytics: G-L6WHJX1K50
 theme: jekyll-theme-hacker
 
+# Idioma padrão do site. Cada página declara o próprio `lang` no front matter; este
+# valor é só o fallback usado pelo `<html lang>` quando a página não declara.
+lang: pt-BR
+
 # ATENÇÃO: definir `exclude` SOBRESCREVE a lista padrão do Jekyll — por isso os
 # itens padrão (Gemfile, vendor/, node_modules) estão repetidos abaixo. Omiti-los
 # faria o Gemfile voltar a ser publicado.

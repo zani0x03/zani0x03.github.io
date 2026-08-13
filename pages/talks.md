@@ -1,5 +1,8 @@
 ---
 layout: default
+title: Talks
+lang: pt
+ref: talks
 ---
 # Talks
 
