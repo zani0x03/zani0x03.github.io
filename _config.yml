@@ -2,3 +2,23 @@ title: Zani0x03
 description: Blog de Tiago Zaniquelli AppSec Specialist Research Developer DotnetCore Python Ruby technology Information Security
 google_analytics: G-L6WHJX1K50
 theme: jekyll-theme-hacker
+
+# ATENÇÃO: definir `exclude` SOBRESCREVE a lista padrão do Jekyll — por isso os
+# itens padrão (Gemfile, vendor/, node_modules) estão repetidos abaixo. Omiti-los
+# faria o Gemfile voltar a ser publicado.
+exclude:
+  # padrões do Jekyll, repetidos porque a chave sobrescreve
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  # herança de quando este repositório era um fork do tema
+  - jekyll-theme-hacker.gemspec
+  - script/
+  - README.md
+  # documentos editoriais internos — não são segredo, mas não são conteúdo do site
+  - CHECKLIST.md
+  - PROMOTION_TEMPLATES.md
