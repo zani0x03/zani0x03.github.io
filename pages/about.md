@@ -23,6 +23,7 @@ Sou um membro ativo da comunidade de segurança, palestrando frequentemente em c
 
 ## Onde me encontrar
 
+- [LinkedIn](https://www.linkedin.com/in/tiago-zaniquelli/)
 - [GitHub](https://github.com/zani0x03)
 - [Twitter](https://twitter.com/zani0x03)
 

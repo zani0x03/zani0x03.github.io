@@ -24,6 +24,7 @@ I am an active member of the security community, frequently speaking at conferen
 
 ## Where to find me
 
+- [LinkedIn](https://www.linkedin.com/in/tiago-zaniquelli/)
 - [GitHub](https://github.com/zani0x03)
 - [Twitter](https://twitter.com/zani0x03)
 
